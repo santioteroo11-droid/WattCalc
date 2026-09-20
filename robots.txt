@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://santioteroo11-droid.github.io/WattCalc/sitemap.xml
