@@ -38,7 +38,19 @@ function initLoadCalculators(){
   c.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',run));run();
  });
 }
+function initCompareCalculators(){
+ document.querySelectorAll('[data-calc="compare"]').forEach(c=>{
+  const q=s=>c.querySelector(s),out=q('[data-output]'),rate=q('[data-rate]'),years=q('[data-years]');
+  const run=()=>{const r=+rate.value||0,y=+years.value||1;
+   const calc=p=>{const w=+q(`[data-${p}-watts]`).value||0,h=+q(`[data-${p}-hours]`).value||0,d=(+q(`[data-${p}-duty]`).value||100)/100;const kwhDay=w/1000*h*d;return {kwhDay,annual:kwhDay*365,cost:kwhDay*365*r};};
+   const a=calc('a'),b=calc('b'),diff=a.cost-b.cost,abs=Math.abs(diff),winner=diff>0?'B':diff<0?'A':'Neither';
+   out.innerHTML=`<div class="result-grid"><div><span>Appliance A / year</span><strong>${money(a.cost)}</strong></div><div><span>Appliance B / year</span><strong>${money(b.cost)}</strong></div><div><span>Annual difference</span><strong>${money(abs)}</strong></div><div><span>${number(y,0)}-year difference</span><strong>${money(abs*y)}</strong></div></div><p class="calc-detail">${winner==='Neither'?'Both scenarios have the same estimated energy cost.':`Scenario ${winner} has the lower estimated energy cost by ${money(abs)} per year.`} A: ${number(a.annual,0)} kWh/yr · B: ${number(b.annual,0)} kWh/yr.</p>`;
+  };
+  c.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',run));run();
+ });
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
- populateRates();initEnergyCalculators();initAnnualCalculators();initLoadCalculators();
+ populateRates();initEnergyCalculators();initAnnualCalculators();initLoadCalculators();initCompareCalculators();
  document.querySelectorAll('.site-footer').forEach(f=>{if(!f.querySelector('.footer-links'))f.insertAdjacentHTML('beforeend','<div class="footer-links"><a href="/WattCalc/about.html">About</a><a href="/WattCalc/editorial-policy.html">Editorial Policy</a><a href="/WattCalc/electricity-rates-by-state.html">Electricity Rates</a><a href="/WattCalc/privacy.html">Privacy</a><a href="/WattCalc/terms.html">Terms</a></div>')});
 });
