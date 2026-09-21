@@ -6,7 +6,7 @@ Public site: https://santioteroo11-droid.github.io/WattCalc/
 
 ## Current scope
 
-- 10 appliance / HVAC electricity-cost calculators
+- 11 appliance / HVAC electricity-cost calculators
 - 10 supporting guides
 - June 2026 EIA residential electricity-rate presets for all U.S. states + D.C.
 - Transparent formulas and editable assumptions
